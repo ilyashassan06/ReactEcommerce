@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Search, Heart, ShoppingCart, Menu, X } from "lucide-react";
+import Logo from "../images/Logo.svg";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,11 +26,9 @@ function Header() {
         {/* Logo */}
         <div className="text-2xl font-bold">
           <Link to="/Home">
-          <img
-            src="/src/images/Logo.svg"
-            alt="H-Commerce logo"
-            className="h-12"
-          />
+         
+          <img src={Logo} alt="H-Commerce logo"
+            className="h-12" />
           </Link>
         </div>
 
