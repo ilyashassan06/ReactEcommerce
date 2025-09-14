@@ -1,10 +1,22 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Search, Heart, ShoppingCart, Menu, X } from "lucide-react";
 import Logo from "../images/Logo.svg";
+import { CartContext } from "../assets/context/CartContext";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+    const { Cart } = useContext(CartContext);
+
+  // Optional: sum all quantities if each item has `quantity`
+  const cartCount = Cart.length;
+
+ const navigate = useNavigate(); // ✅ hook for navigation
+
+  const handleClick = () => {
+    navigate("/Cart"); // ✅ redirect to /products
+  };
 
   return (
     <div className="flex flex-col">
@@ -25,7 +37,7 @@ function Header() {
       <div className="flex items-center justify-between h-[70px] border-b border-gray-300 px-6">
         {/* Logo */}
         <div className="text-2xl font-bold">
-          <Link to="/Home">
+          <Link to="/">
          
           <img src={Logo} alt="H-Commerce logo"
             className="h-12" />
@@ -98,12 +110,33 @@ function Header() {
             <Search className="w-5 h-5 text-gray-600 cursor-pointer" />
           </div>
           <Heart className="w-6 h-6 cursor-pointer hover:text-red-500" />
-          <ShoppingCart className="w-6 h-6 cursor-pointer hover:text-gray-700" />
+          <div className="relative">
+        <ShoppingCart
+          onClick={handleClick}
+          className="w-6 h-6 cursor-pointer hover:text-gray-700"
+        />
+        {cartCount > 0 && (
+          <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+            {cartCount}
+          </div>
+        )}
+      </div>
         </div>
 
         {/* Hamburger Menu (Mobile) */}
-      <div className="md:hidden flex justify-between">
-          <ShoppingCart className="  w-6 h-6 mr-5 cursor-pointer hover:text-gray-700" />
+      <div className="md:hidden flex gap-4 justify-between">
+         <Heart className="w-6 h-6 cursor-pointer hover:text-red-500" />
+         <div className="relative">
+        <ShoppingCart
+          onClick={handleClick}
+          className="w-6 h-6 cursor-pointer hover:text-gray-700"
+        />
+        {cartCount > 0 && (
+          <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+            {cartCount}
+          </div>
+        )}
+      </div>
         <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
@@ -192,11 +225,8 @@ function Header() {
             Contact
           </NavLink>
 
-          {/* Icons */}
-          <div className="flex items-center space-x-4 mt-4">
-            <Heart className="w-6 h-6 cursor-pointer hover:text-red-500" />
-            <ShoppingCart className="w-6 h-6 cursor-pointer hover:text-gray-700" />
-          </div>
+          
+          
         </div>
       </div>
     </div>
