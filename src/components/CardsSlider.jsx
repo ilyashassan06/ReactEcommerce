@@ -29,7 +29,13 @@ function CardsSlider() {
   return (
     <div className="flex w-full overflow-x-auto gap-4 p-4">
       {SaleProducts.map((product, index) => (
-        <Card product={product} index={index} onAddToCart={handleAddToCart}/>
+        <div key={product.id || index} className="flex-shrink-0 w-70 text-lg sm:w-[250px] md:w-[250px]">
+      <Card
+        product={product}
+        index={index}
+        onAddToCart={handleAddToCart}
+      />
+    </div>
       ))}
         
       {/* ✅ Toast Notification */}

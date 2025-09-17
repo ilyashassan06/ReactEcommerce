@@ -11,7 +11,7 @@ function Card({ product, index,onAddToCart }) {
       key={product.id}
       className="  flex flex-shrink-0 flex-col items-start pb-4 
   bg-white rounded-xl shadow-md 
-  w-[90%] sm:w-[40%] md:w-[31%] lg:w-[23%] 
+  w-[90%]  
   h-auto justify-between"
     >
       {/* ✅ Product Image */}
@@ -28,12 +28,12 @@ function Card({ product, index,onAddToCart }) {
       </div>
 
       {/* ✅ Title & Price Section */}
-      <div className="w-full flex flex-col">
-        <p className=" font-semibold text-center h-18 flex items-start justify-start line-clamp-2 overflow-hidden text-3xl sm:text-base md:text-lg lg:text-2xl">
+      <div className="w-full flex flex-col p-2">
+        <p className=" font-semibold text-center h-14 sm:h-18 flex items-start justify-start line-clamp-2 overflow-hidden text-2xl sm:text-base md:text-lg lg:text-2xl">
   {product.title}
 </p>
 
-<p className="mt-2 text-red-500 font-bold text-4xl sm:text-xl md:text-2xl lg:text-3xl text-center">
+<p className="mt-2 text-red-500 font-bold text-2xl sm:text-xl md:text-2xl lg:text-3xl text-center">
   ₹{product.price}
 </p>
       </div>
