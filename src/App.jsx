@@ -3,6 +3,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './App.css'
+import SingleProduct from './pages/SingleProduct';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -10,6 +11,7 @@ import Products from './pages/Products';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Cart from './pages/Cart';
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -32,6 +34,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/Cart" element={<Cart />} />
+         <Route path="/singleproduct/:id" element={<SingleProduct/>} /> 
       </Routes>
 
     <Footer/>
@@ -39,5 +42,6 @@ function App() {
     </>
   )
 }
+
 
 export default App
