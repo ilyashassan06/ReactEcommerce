@@ -50,10 +50,10 @@ function Products() {
 
       {/* ✅ Products Grid */}
       <div className="flex-1">
-       <div className="flex flex-wrap justify-center gap-6 w-[100%] px-0 sm:px-4">
+       <div className="flex flex-wrap justify-center gap-1 md:gap-6 w-[100%] px-0 sm:px-4">
 
           {filteredProducts.map((product, index) => (
-             <div key={product.id || index} className=" flex flex-shrink-0 justify-center  text-xl w-[90%]  md:w-65">
+             <div key={product.id || index} className=" flex flex-shrink-0 justify-center  text-xl w-[49%]  md:w-65">
             <Card
               key={product.id || index} // ✅ unique key
               product={product}
