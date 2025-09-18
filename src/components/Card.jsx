@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "motion/react"
 
 function Card({ product, index,onAddToCart }) {
 
@@ -43,20 +44,22 @@ function Card({ product, index,onAddToCart }) {
 
   {/* ✅ Add to Cart Button */}
   <div className="w-full mt-1 flex flex-col gap-1 justify-center items-center">
-    <button
+    <motion.button
+      whileTap={{ scale: 0.95 }}
       onClick={() => onAddToCart(product)}
       className="w-[80%] h-10 text-white bg-[#db4444] rounded hover:bg-[#e57373]"
       style={{ fontSize: "clamp(18px, 1.5vw, 16px)" }}
     >
       Add To Cart
-    </button>
-    <button
+    </motion.button>
+    <motion.button
+      whileTap={{ scale: 0.95 }}
       onClick={() => navigate(`/singleproduct/${product.id}`, { state: { product } })}
       className="w-[80%] h-10 text-white bg-[#05bc0b] rounded hover:bg-[#e57373]"
       style={{ fontSize: "clamp(18px, 1.5vw, 16px)" }}
     >
       See Details
-    </button>
+    </motion.button>
   </div>
 </div>
 

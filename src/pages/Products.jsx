@@ -11,7 +11,7 @@ function Products() {
   const [toastMessage, setToastMessage] = useState("");
 
   const handleAddToCart = (product) => {
-    addToCart(product);
+    addToCart({ product, quantity: 1 } );
     setToastMessage(`${product.title} added to cart ✅`);
 
     // hide toast after 2 sec
@@ -25,7 +25,7 @@ function Products() {
   const filteredProducts = products.filter((p) => {
     const categoryMatch =
       selectedCategories.includes("All") ||
-      selectedCategories.includes(p.category?.name);
+      selectedCategories.includes(p.category);
 
     const priceMatch = p.price >= priceRange[0] && p.price <= priceRange[1];
 

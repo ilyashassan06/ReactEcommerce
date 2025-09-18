@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 function FilterSection({
   products,
   selectedCategories,
@@ -7,7 +8,7 @@ function FilterSection({
   priceRange,
   setPriceRange,
 }) {
-  const categories = products.map((p) => p.category?.name || "Unknown");
+  const categories = products.map((p) => p.category || "Unknown");
   const uniqueCategories = ["All", ...new Set(categories)];
 
   const [isOpen, setIsOpen] = useState(false); // for mobile toggle
@@ -24,6 +25,12 @@ function FilterSection({
     }
   };
 
+  const HandleClick = ()=>{
+    setSelectedCategories(["All"])
+    setPriceRange([0, 1000])
+    setIsOpen(!isOpen)
+  }
+  
   return (
     <div className="w-full bg-gray-100">
       {/* ✅ Mobile toggle button */}
@@ -44,10 +51,10 @@ function FilterSection({
         <h1 className="font-bold mb-4">Apply Filters</h1>
 
         {/* Categories */}
-        <div className="w-full mb-6">
+        <div className="w-full mb-6 h-80 overflow-y-scroll scrollbar-custom rounded-l">
           <label className="font-semibold">Select Category</label>
           {uniqueCategories.map((cat, index) => (
-            <div key={cat} className="flex items-center gap-2 mt-2">
+            <div key={cat} className="flex items-center gap-2 mt-2 ">
               <input
                 type="checkbox"
                 value={cat}
@@ -100,6 +107,18 @@ function FilterSection({
           <p className="text-sm text-gray-600">
             Selected: ₹{priceRange[0]} - ₹{priceRange[1]}
           </p>
+          <div className="flex flex-row gap-2 justify-center md:flex md:flex-Col w-[100%] p-3">
+            <button
+          className="bg-amber-500 w-[47%] md:w[100%] rounded h-12 text-xl text-white"
+          onClick={() => setIsOpen(!isOpen)}
+          >
+          Apply Filter</button>
+          <button
+          className="bg-red-500 w-[47%] md:w[100%] rounded h-12 text-xl text-white"
+          onClick={HandleClick}
+          >
+          Reset Filters</button>
+          </div>
         </div>
       </div>
     </div>

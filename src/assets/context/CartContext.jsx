@@ -21,10 +21,10 @@ function CartProvider({ children }) {
   }, [Cart]);
 
   // ✅ Add product to cart
-  const addToCart = (product) => {
+  const addToCart = ({product,quantity}) => {
+    
     setCart((prev) => {
       const existItem = prev.find((item) => item.id == product.id);
-
       if (existItem) {
         // If product exists → increase quantity
         return prev.map((item) =>
@@ -41,7 +41,7 @@ function CartProvider({ children }) {
             title: product.title || "Untitled Product", // fallback if missing
             price: product.price || 0, // fallback if missing
             images: product.images || ["https://via.placeholder.com/100"], // fallback image
-            quantity: 1, // ✅ always start with quantity = 1
+            quantity, // ✅ always start with quantity = 1
           },
         ];
       }

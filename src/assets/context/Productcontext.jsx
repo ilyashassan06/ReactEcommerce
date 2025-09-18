@@ -14,13 +14,14 @@ function ProductsProvider({ children }) {
     const fetchProducts = async () => {
       try {
         // Fetch product list from API
-        const response = await fetch("https://api.escuelajs.co/api/v1/products");
+        const response = await fetch("https://dummyjson.com/products?limit=0");
         if (!response.ok) {
           throw new Error("Failed to fetch products"); // handle bad response
         }
 
         // Convert response to JSON
-        const data = await response.json();
+        const Newdata = await response.json();
+        const data = Newdata.products
 
         // ✅ Set products (fallback to [] in case API returns null/undefined)
         setProducts(data || []);
