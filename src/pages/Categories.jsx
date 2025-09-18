@@ -12,7 +12,7 @@ const Categories = () => {
   const { cat } = location.state || {}; // Defaults to {} if state is null
    // Filter products matching the selected category
   const filteredProducts = products.filter(product => product.category === cat);
- const handleAddToCart = (product) => {
+ const handleAddToCart = ({product, quantity:1}) => {
     addToCart(product);
     setToastMessage(`${product.title} added to cart ✅`);
 
