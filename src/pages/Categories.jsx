@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+product { useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ProductsContext } from "../assets/context/Productcontext";
 import Card from "../components/Card";
@@ -12,8 +12,8 @@ const Categories = () => {
   const { cat } = location.state || {}; // Defaults to {} if state is null
    // Filter products matching the selected category
   const filteredProducts = products.filter(product => product.category === cat);
- const handleAddToCart = ({product, quantity:1}) => {
-    addToCart(product);
+ const handleAddToCart = (product) => {
+    addToCart({product, quantity:1});
     setToastMessage(`${product.title} added to cart ✅`);
 
     // hide toast after 2 sec
