@@ -15,7 +15,7 @@ const Categories = () => {
    // Filter products matching the selected category
   const filteredProducts = products.filter(product => product.category === cat);
  const handleAddToCart = (product) => {
-    addToCart(product);
+   addToCart({ product, quantity: 1 } );
     setToastMessage(`${product.title} added to cart ✅`);
 
     // hide toast after 2 sec
