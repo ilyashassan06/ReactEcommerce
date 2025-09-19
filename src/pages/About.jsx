@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ThemeContext } from '../assets/context/ThemeToggleContext';
 
 function About() {
+    const { theme, toggleTheme } = useContext(ThemeContext); // ✅ Use context
   return (
-     <div className="bg-gray-50 text-gray-800">
+     <div className={`${theme === "light"
+        ? "bg-white   text-black"
+        : "bg-[#0C0C0C]  text-white"
+    }`}>
       {/* Hero Section */}
       <section className="relative w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white py-20">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center">
@@ -27,22 +32,34 @@ function About() {
       </section>
 
       {/* Mission, Vision, Values */}
-      <section className="max-w-6xl mx-auto px-6 py-16 grid gap-10 md:grid-cols-3">
-        <div className="bg-white rounded-2xl shadow-md p-8 hover:shadow-lg transition">
+      <section className={`max-w-6xl mx-auto px-6 py-16 grid border-b-6 gap-10 md:grid-cols-3 ${theme === "light"
+ ? "border-black"
+      : "border-white"
+    } `}>
+        <div className={` rounded-2xl shadow-md p-8 hover:shadow-lg transition ${theme === "light"
+ ? "bg-gray-100 text-black"
+      : "bg-[#181818] text-white"
+    }`}>
           <h2 className="text-2xl font-semibold mb-3 text-indigo-600">Our Mission</h2>
           <p>
             To empower customers by providing premium quality products, 
             fast delivery, and exceptional customer service — all at fair prices.
           </p>
         </div>
-        <div className="bg-white rounded-2xl shadow-md p-8 hover:shadow-lg transition">
+        <div className={` rounded-2xl shadow-md p-8 hover:shadow-lg transition ${theme === "light"
+ ? "bg-gray-100 text-black"
+      : "bg-[#181818] text-white"
+    }`}>
           <h2 className="text-2xl font-semibold mb-3 text-purple-600">Our Vision</h2>
           <p>
             To be the most customer-centric e-commerce platform, where people 
             can discover and buy everything they love with trust and ease.
           </p>
         </div>
-        <div className="bg-white rounded-2xl shadow-md p-8 hover:shadow-lg transition">
+        <div className={` rounded-2xl shadow-md p-8 hover:shadow-lg transition ${theme === "light"
+ ? "bg-gray-100 text-black"
+      : "bg-[#181818] text-white"
+    }`}>
           <h2 className="text-2xl font-semibold mb-3 text-pink-600">Our Values</h2>
           <p>
             Integrity, innovation, and customer satisfaction guide everything 
@@ -52,8 +69,14 @@ function About() {
       </section>
 
       {/* Our Story */}
-      <section className="bg-gray-100 py-16">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+      <section className={` pc py-16 border-b-8 ${theme === "light"
+        ? "bg-white border-black   text-black"
+        : "bg-[#0C0C0C] border-gray-400  text-white"
+    }`}>
+        <div className={`w-[90%] md:w-[80%] sm:w-[90%] mx-auto p-3 rounded-3xl  flex flex-col md:flex-row items-center gap-12 ${theme === "light"
+ ? "bg-gray-100 text-black"
+      : "bg-[#181818] text-white"
+    }`}>
           <div className="flex-1">
             <img
               src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df"
@@ -61,7 +84,7 @@ function About() {
               className="rounded-2xl shadow-lg"
             />
           </div>
-          <div className="flex-1">
+          <div className="flex-1 justify-center px-4">
             <h2 className="text-3xl font-bold mb-4">Our Story</h2>
             <p className="leading-relaxed mb-4">
               ShopSphere was founded with a simple idea: online shopping should be 
@@ -99,7 +122,10 @@ function About() {
           ].map((member, i) => (
             <div
               key={i}
-              className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition"
+              className={` rounded-2xl shadow-md p-6 hover:shadow-lg transition ${theme === "light"
+ ? "bg-gray-100 text-black"
+      : "bg-[#181818] text-white"
+    }`}
             >
               <img
                 src={member.img}

@@ -3,10 +3,12 @@ import { ProductsContext } from '../assets/context/Productcontext';
 import { div } from 'motion/react-client';
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
+import { ThemeContext } from '../assets/context/ThemeToggleContext';
 
 function CategorySection() {
 
     const navigate = useNavigate()
+     const { theme, toggleTheme } = useContext(ThemeContext); // ✅ Use context
     const { products, loading, error } = useContext(ProductsContext);
     const categories = products.map((p) => p.category || "Unknown")
      const uniqueCategories = [...new Set(categories)];
@@ -21,9 +23,12 @@ const randomFive = getRandomCategories(uniqueCategories, 7);
 // randomFive will have 5 unique categories
   return (
 
-   <div className="w-full flex flex-col md:justify-center items-center py-8 px-1">
+   <div className={`w-full flex flex-col md:justify-center items-center border-b-2   py-8 px-1 ${theme === "light"
+        ? "bg-white border-black   text-gray-800"
+        : "bg-[#0C0C0C] border-white  text-white"
+    }`}>
   {/* Section Heading */}
-  <h1 className="text-3xl font-bold mb-6 text-gray-800">Shop By Trending Categories</h1>
+  <h1 className="text-3xl font-bold mb-6 ">Shop By Trending Categories</h1>
 
   {/* Categories Grid */}
   <div className="w-full flex flex-wrap  items-center justify-center md:flex   gap-2 md:gap-5">
@@ -40,10 +45,14 @@ const randomFive = getRandomCategories(uniqueCategories, 7);
           border rounded-xl px-4 py-3 shadow-sm 
           hover:shadow-md 
           flex justify-center items-center cursor-pointer
-          ${index % 2 === 0 ? "bg-blue-100" : "bg-blue-200"} 
+          
+          ${theme === "light"
+ ? "bg-gray-100 text-black"
+      : "bg-[#181818] text-White"
+    } 
         `}
       >
-        <p className="text-sm sm:text-lg font-medium text-gray-700 truncate whitespace-nowrap max-w-[120px] sm:max-w-none">
+        <p className="text-sm sm:text-lg font-medium  truncate whitespace-nowrap max-w-[120px] sm:max-w-none">
           {cat}
         </p>
       </motion.div>

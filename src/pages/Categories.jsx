@@ -3,9 +3,11 @@ import { useLocation } from "react-router-dom";
 import { ProductsContext } from "../assets/context/Productcontext";
 import Card from "../components/Card";
 import { CartContext } from "../assets/context/CartContext";
+import { ThemeContext } from "../assets/context/ThemeToggleContext";
 
 const Categories = () => {
   const location = useLocation();
+   const { theme, toggleTheme } = useContext(ThemeContext); // ✅ Use context
   const [toastMessage, setToastMessage] = useState("");
   const { products, loading, error } = useContext(ProductsContext);
    const { addToCart } = useContext(CartContext);
@@ -25,8 +27,14 @@ const Categories = () => {
   }
 
   return  <>
-  <div className="flex-1">
-       <div className="flex flex-wrap justify-center gap-1 gap-y-8 mt-7  md:gap-6 w-[100%] px-0 sm:px-4">
+  <div className={`flex-1 my-2 ${theme === "light"
+        ? "bg-white   text-black"
+        : "bg-[#0C0C0C]  text-white"
+    }`}>
+       <div className={`flex flex-wrap justify-center gap-1 gap-y-8 mt-7  md:gap-6 w-[100%] px-0 sm:px-4 ${theme === "light"
+        ? "bg-white   text-black"
+        : "bg-[#0C0C0C]  text-white"
+    }`}>
 
           {filteredProducts.map((product, index) => (
              <div key={product.id || index} className=" flex flex-shrink-0 justify-center gap-3  text-xl w-[49%]  md:w-65">

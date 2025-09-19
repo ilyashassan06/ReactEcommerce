@@ -1,36 +1,45 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ThemeContext } from '../assets/context/ThemeToggleContext';
 
 function Contact() {
+
+  const { theme, toggleTheme } = useContext(ThemeContext); // ✅ Use context
   return (
-    <div className="bg-gray-50 min-h-screen flex items-center justify-center px-6 py-12">
-      <div className="max-w-2xl w-full bg-white shadow-xl rounded-2xl p-8">
+    <div className={` min-h-screen flex items-center justify-center px-6 py-12 ${theme === "light"
+        ? "bg-white   text-black"
+        : "bg-[#0C0C0C]  text-white"
+    }`}>
+      <div className={`max-w-2xl w-full  shadow-xl rounded-2xl p-8 ${theme === "light"
+ ? "bg-gray-100 text-black"
+      : "bg-[#181818] text-white"
+    }`}>
         {/* Heading */}
         <h2 className="text-3xl font-extrabold text-center text-indigo-600 mb-6">
           Contact Us
         </h2>
-        <p className="text-center text-gray-500 mb-8">
+        <p className="text-center  mb-8">
           Have questions? Fill out the form below and we’ll get back to you soon.
         </p>
 
         {/* Form */}
-        <form className="space-y-6">
+        <form className={`space-y-6 $`}>
           {/* Name */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block  font-medium mb-2">
               Full Name
             </label>
             <input
               type="text"
               name="name"
               required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+              className={`w-full border border-gray-300 rounded-lg px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition `}
               placeholder="Enter your full name"
             />
           </div>
 
           {/* Email */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block  font-medium mb-2">
               Email Address
             </label>
             <input
@@ -44,7 +53,7 @@ function Contact() {
 
           {/* Contact Number */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block  font-medium mb-2">
               Contact Number
             </label>
             <input
@@ -59,7 +68,7 @@ function Contact() {
 
           {/* Message */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block  font-medium mb-2">
               Your Message
             </label>
             <textarea

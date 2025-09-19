@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react"
+import { ThemeContext } from "../assets/context/ThemeToggleContext";
 
 function Card({ product, index,onAddToCart }) {
 
-    
+     const { theme, toggleTheme } = useContext(ThemeContext); // ✅ Use context
 
      const navigate = useNavigate();
   return (
    <div
   key={product.id}
-  className="flex flex-shrink-0 flex-col items-start pb-4 bg-white rounded-xl shadow-md w-[90%] h-auto justify-between"
+  className={`flex flex-shrink-0 flex-col items-start p-2 pb-4   rounded-xl shadow-md w-[90%] h-auto justify-between
+   ${theme === "light"
+ ? "bg-gray-100 text-black"
+      : "bg-[#181818] text-white"
+    }
+  `}
 >
   {/* ✅ Product Image */}
-  <div className="w-full h-60 rounded-lg overflow-hidden flex items-center justify-center bg-gray-100">
+  <div className="w-full h-60 rounded-lg overflow-hidden p-2 flex items-center justify-center bg-gray-100">
     <img
       src={
         product?.images && product.images.length > 0
@@ -26,10 +32,21 @@ function Card({ product, index,onAddToCart }) {
   </div>
 
   {/* ✅ Title & Price Section */}
-  <div className="w-full flex flex-col p-2">
+  <div className={`w-full flex flex-col p-2 border-t-2 mt-2 ${theme === "light"
+ ? "border-black"
+      : "border-white"
+    }`}  >
     <p
-      className="font-semibold text-center h-14 sm:h-18 flex items-start justify-start line-clamp-2 overflow-hidden"
-      style={{ fontSize: "clamp(20px, 2vw, 22px)" }}
+     style={{
+    fontSize: "clamp(20px, 1vw, 22px)",
+    display: "-webkit-box",
+    WebkitLineClamp: 1,
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  }}
+      className="font-semibold text-center h-14 sm:h-14 flex items-start justify-start line-clamp-2 overflow-hidden"
+      
     >
       {product.title}
     </p>

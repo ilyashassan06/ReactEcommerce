@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { ThemeContext } from "../assets/context/ThemeToggleContext";
 
 
 function FilterSection({
@@ -8,6 +9,7 @@ function FilterSection({
   priceRange,
   setPriceRange,
 }) {
+  const { theme, toggleTheme } = useContext(ThemeContext); // ✅ Use context
   const categories = products.map((p) => p.category || "Unknown");
   const uniqueCategories = ["All", ...new Set(categories)];
 
@@ -32,22 +34,31 @@ function FilterSection({
   }
   
   return (
-    <div className="w-full bg-gray-100">
+    <div className={`w-full  ${theme === "light"
+ ? "bg-gray-100 text-black"
+      : "bg-[#181818] text-White"
+    }`}>
       {/* ✅ Mobile toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden w-full bg-gray-200 p-3 rounded-md mb-4 flex justify-between items-center"
+        className={`lg:hidden w-[90%]  p-3 rounded-lg mb-4 flex justify-between items-center ${theme === "light"
+ ? "bg-gray-100 text-black"
+      : "bg-[#181818] text-White"
+    }`}
       >
         <span className="font-semibold">Filters</span>
         <span>{isOpen ? "▲" : "▼"}</span>
       </button>
 
       {/* ✅ Filter content */}
-      <div
-        className={`p-5  rounded-md  
-          ${isOpen ? "block" : "hidden"} 
-          lg:block`} // always visible on desktop
-      >
+     <div
+  className={`p-5 rounded-md
+    ${isOpen ? "block" : "hidden"} lg:block
+    ${theme === "light"
+      ? "bg-gray-100 text-black"
+      : "bg-[#181818] text-white"
+    }`}
+>
         <h1 className="font-bold mb-4">Apply Filters</h1>
 
         {/* Categories */}

@@ -1,13 +1,17 @@
 // Import React core, hooks, and utilities
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom"; // ✅ Router navigation & links
 import { Search, Heart, ShoppingCart, Menu, X } from "lucide-react"; // ✅ Icons from lucide-react
 import Logo from "../images/Logo.svg"; // ✅ App logo
 import { CartContext } from "../assets/context/CartContext"; // ✅ Cart context for global state
+import { ThemeContext } from "../assets/context/ThemeToggleContext";
 
 function Header() {
   // ✅ Local state to toggle mobile menu visibility
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // ✅ Theme state
+  const { theme, toggleTheme } = useContext(ThemeContext); // ✅ Use context
 
   // ✅ Access Cart from context
   const { Cart } = useContext(CartContext);
@@ -20,7 +24,7 @@ function Header() {
 
   // ✅ Handler for clicking on cart icon → navigates to /Cart page
   const handleClick = () => {
-    navigate("/Cart"); 
+    navigate("/Cart");
   };
 
   return (
@@ -40,8 +44,12 @@ function Header() {
       </div>
 
       {/* ====================== NAVBAR SECTION ====================== */}
-      <div className="flex items-center justify-between h-[70px] border-b border-gray-300 px-6">
-        
+      <div className={`flex items-center justify-between h-[70px] border-b border-gray-300 px-6  
+      ${
+      theme === "light"
+        ? "bg-white border-gray-400  text-black"
+        : "bg-[#181818] border-gray-800   text-white"
+    }`}>
         {/* ---------- Logo ---------- */}
         <div className="text-2xl font-bold">
           <Link to="/">
@@ -51,56 +59,52 @@ function Header() {
 
         {/* ---------- Desktop Navigation Links ---------- */}
         <div className="hidden md:flex text-lg gap-8 font-medium">
-          {/* Home */}
           <NavLink
             to="/"
             className={({ isActive }) =>
               `relative pb-1 transition-colors duration-300 ${
                 isActive
-                  ? "text-blue-600 font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
-                  : "text-gray-700 hover:text-blue-500"
+                  ? " font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
+                  : " hover:text-blue-500"
               }`
             }
           >
             Home
           </NavLink>
 
-          {/* Products */}
           <NavLink
             to="/Products"
             className={({ isActive }) =>
               `relative pb-1 transition-colors duration-300 ${
                 isActive
-                  ? "text-blue-600 font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
-                  : "text-gray-700 hover:text-blue-500"
+                  ? " font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
+                  : " hover:text-blue-500"
               }`
             }
           >
             Products
           </NavLink>
 
-          {/* About Us */}
           <NavLink
             to="/About"
             className={({ isActive }) =>
               `relative pb-1 transition-colors duration-300 ${
                 isActive
-                  ? "text-blue-600 font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
-                  : "text-gray-700 hover:text-blue-500"
+                  ? " font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
+                  : " hover:text-blue-500"
               }`
             }
           >
             About Us
           </NavLink>
 
-          {/* Contact */}
           <NavLink
             to="/Contact"
             className={({ isActive }) =>
               `relative pb-1 transition-colors duration-300 ${
                 isActive
-                  ? "text-blue-600 font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
-                  : "text-gray-700 hover:text-blue-500"
+                  ? " font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
+                  : " hover:text-blue-500"
               }`
             }
           >
@@ -108,7 +112,7 @@ function Header() {
           </NavLink>
         </div>
 
-        {/* ---------- Desktop: Search + Icons ---------- */}
+        {/* ---------- Desktop: Search + Icons + Theme Toggle ---------- */}
         <div className="hidden md:flex items-center gap-4 mr-[80px]">
           {/* Search Input */}
           <div className="flex items-center border border-gray-300 rounded-md px-2 bg-gray-50 w-[220px]">
@@ -132,14 +136,25 @@ function Header() {
               </div>
             )}
           </div>
+
+          {/* Theme Toggle (Desktop) */}
+          <button
+            onClick={toggleTheme}
+            className={`px-3 py-1 rounded-md border text-sm 
+    ${
+      theme === "light"
+        ? "bg-white border-gray-400  text-black"
+        : "bg-[#18181 border-gray-600  text-white"
+    }`}
+          >
+            {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+          </button>
         </div>
 
         {/* ---------- Mobile: Heart + Cart + Hamburger ---------- */}
         <div className="md:hidden flex gap-4 justify-between">
-          {/* Wishlist */}
           <Heart className="w-6 h-6 cursor-pointer hover:text-red-500" />
 
-          {/* Cart */}
           <div className="relative">
             <ShoppingCart
               onClick={handleClick}
@@ -152,7 +167,6 @@ function Header() {
             )}
           </div>
 
-          {/* Hamburger Menu */}
           <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -161,9 +175,15 @@ function Header() {
 
       {/* ====================== MOBILE SLIDE MENU ====================== */}
       <div
-        className={`md:hidden fixed top-0 right-0 h-full w-3/4 bg-white shadow-lg transform ${
+        className={`md:hidden fixed top-0 right-0 h-full w-3/4   shadow-lg transform ${
           menuOpen ? "translate-x-0" : "translate-x-full"
-        } transition-transform duration-300 ease-in-out z-50`}
+        } transition-transform duration-300 ease-in-out z-50
+         ${
+      theme === "light"
+        ? "bg-white   text-black"
+        : "bg-gray-900 00  text-white"
+    }
+        `}
       >
         {/* Mobile Menu Header */}
         <div className="flex justify-between items-center p-4 border-b">
@@ -187,65 +207,73 @@ function Header() {
 
         {/* Mobile Navigation Links */}
         <div className="flex flex-col p-4 space-y-4 text-lg">
-          {/* Home */}
           <NavLink
             onClick={() => setMenuOpen(false)}
             to="/"
             className={({ isActive }) =>
               `relative pb-1 transition-colors duration-300 ${
                 isActive
-                  ? "text-blue-600 font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
-                  : "text-gray-700 hover:text-blue-500"
+                  ? " font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
+                  : " hover:text-blue-500"
               }`
             }
           >
             Home
           </NavLink>
 
-          {/* Products */}
           <NavLink
             onClick={() => setMenuOpen(false)}
             to="/Products"
             className={({ isActive }) =>
               `relative pb-1 transition-colors duration-300 ${
                 isActive
-                  ? "text-blue-600 font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
-                  : "text-gray-700 hover:text-blue-500"
+                  ? " font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
+                  : " hover:text-blue-500"
               }`
             }
           >
             Products
           </NavLink>
 
-          {/* About */}
           <NavLink
             onClick={() => setMenuOpen(false)}
             to="/About"
             className={({ isActive }) =>
               `relative pb-1 transition-colors duration-300 ${
                 isActive
-                  ? "text-blue-600 font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
-                  : "text-gray-700 hover:text-blue-500"
+                  ? " font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
+                  : " hover:text-blue-500"
               }`
             }
           >
             About Us
           </NavLink>
 
-          {/* Contact */}
           <NavLink
             onClick={() => setMenuOpen(false)}
             to="/Contact"
             className={({ isActive }) =>
               `relative pb-1 transition-colors duration-300 ${
                 isActive
-                  ? "text-blue-600 font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
-                  : "text-gray-700 hover:text-blue-500"
+                  ? " font-semibold after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-blue-600 after:left-0 after:-bottom-1"
+                  : " hover:text-blue-500"
               }`
             }
           >
             Contact
           </NavLink>
+
+          {/* Theme Toggle (Mobile) */}
+          <button
+            onClick={toggleTheme}
+            className={`px-3 py-1 rounded-md border text-sm 
+    ${theme === "light" 
+      ? "bg-white border-gray-400 hover:bg-gray-200 text-black" 
+      : "bg-gray-800 border-gray-600 hover:bg-gray-700 text-white"
+    }`}
+          >
+            {theme === "light" ? "🌙 Switch to Dark" : "☀️ Switch to Light"}
+          </button>
         </div>
       </div>
     </div>

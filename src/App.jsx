@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Routes, Route, Link } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -12,10 +12,12 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Cart from './pages/Cart';
 import Categories from './pages/Categories';
+import { ThemeContext } from './assets/context/ThemeToggleContext';
 
 
 function App() {
   const [count, setCount] = useState(0)
+        const { theme, toggleTheme } = useContext(ThemeContext); // ✅ Use context
   var settings = {
     dots: true,
     infinite: true,
@@ -25,8 +27,12 @@ function App() {
   };
 
   return (
+    
     <>
-    <div className='w-[100%] flex flex-col '>
+    <div className={`w-[100%] flex flex-col ${theme === "light"
+        ? "bg-white   "
+        : "bg-[#0C0C0C]  "
+    }`} >
       <Header/>
 
       <Routes>

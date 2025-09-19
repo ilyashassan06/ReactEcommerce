@@ -5,8 +5,10 @@ import './index.css'
 import App from './App.jsx'
 import ProductsProvider from './assets/context/Productcontext.jsx';
 import CartProvider from './assets/context/CartContext.jsx';
+import ThemeToggleContext from './assets/context/ThemeToggleContext.jsx';
 
 createRoot(document.getElementById('root')).render(
+  <ThemeToggleContext>
   <CartProvider>
   <ProductsProvider>
   <BrowserRouter>
@@ -16,4 +18,5 @@ createRoot(document.getElementById('root')).render(
   </BrowserRouter>
   </ProductsProvider>
   </CartProvider>
+  </ThemeToggleContext>
 )

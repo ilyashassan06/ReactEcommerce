@@ -3,23 +3,33 @@ import { ProductsContext } from '../assets/context/Productcontext';
 import SlickSlider from "react-slick"; // renamed to avoid confusion with your component name
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { ThemeContext } from '../assets/context/ThemeToggleContext';
 
 function Slider() {
       const { products, loading, error } = useContext(ProductsContext);
    var settings = {
-    dots: true,
+   
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
 
+    // ✅ Theme state
+        const { theme, toggleTheme } = useContext(ThemeContext); // ✅ Use context
     const randomProducts = useMemo(() => {
     return [...products].sort(() => Math.random() - 0.5).slice(0, 5);
   }, [products]);
   return (
-    <div className="w-full">
-      <SlickSlider {...settings}>
+    <div className={`w-full ${
+      theme === "light"
+        ? "bg-white border-gray-400  text-black"
+        : "bg-gray-900 border-gray-800   text-white"
+    }`}>
+      <SlickSlider {...settings} className={` ${theme === "light"
+        ? "bg-white border-gray-400  text-black"
+        : "bg-gray-900 border-gray-800 }  text-white"
+    }`}>
       {randomProducts.map((product,index) => (
        <div
       key={product.id}

@@ -1,15 +1,20 @@
 // Import React and context hook
 import React, { useContext } from "react";
 import { CartContext } from "../assets/context/CartContext"; // ✅ Cart context
+import { ThemeContext } from "../assets/context/ThemeToggleContext";
 
 function Cart() {
   // ✅ Extract cart state & functions from context
   const { Cart, addToCart, decreaseQuantity, removeFromCart } =
     useContext(CartContext); 
-  console.log("Cart Items:", Cart);
+       const { theme, toggleTheme } = useContext(ThemeContext); // ✅ Use context
+
 
   return (
-    <div className="p-6">
+    <div className={`p-6 ${theme === "light"
+        ? "bg-white   text-black"
+        : "bg-[#0C0C0C]  text-white"
+    }`}>
       {/* Page Title */}
       <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
 
@@ -22,7 +27,10 @@ function Cart() {
           {Cart.map((item, index) => (
             <div
               key={index}
-              className="flex items-center justify-between p-4 h-auto border rounded-lg shadow-sm bg-white"
+              className={`flex items-center justify-between p-4 h-auto border rounded-lg shadow-sm  ${theme === "light"
+ ? "bg-gray-100 text-black"
+      : "bg-[#181818] text-white"
+    }`}
             >
               {/* Product Image (fallback if missing) */}
               <img
@@ -51,7 +59,7 @@ function Cart() {
                   <span>{item.quantity}</span>
                   <button
                     className="bg-[#DB4444] w-6 h-6 text-white flex justify-center items-center" 
-                    onClick={() => addToCart(item)}
+                    onClick={() => addToCart({ product: item, quantity: 1 })}
                   >
                     +
                   </button>
